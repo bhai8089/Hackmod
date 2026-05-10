@@ -12,7 +12,7 @@
         .container { width: 100%; max-width: 420px; text-align: center; position: relative; margin-top: 30px; }
         .shake { animation: shakeAnim 0.4s ease-in-out; border: 1px solid var(--error) !important; }
         @keyframes shakeAnim { 0%, 100% { transform: translateX(0); } 20%, 60% { transform: translateX(-10px); } 40%, 80% { transform: translateX(10px); } }
-        .app-logo { width: 100px; height: 100px; border-radius: 25px; margin-bottom: 15px; border: 2.5px solid var(--primary); object-fit: cover; box-shadow: 0 0 25px rgba(0,255,136,0.3); animation: logoPulse 2s infinite; }
+        .app-logo { width: 100px; height: 100px; border-radius: 25px; margin-bottom: 15px; border: 2.5px solid var(--primary); object-fit: cover; box-shadow: 0 0 25px rgba(0,255,136,0.3); animation: logoPulse 2s infinite; transition: all 0.3s ease; }
         @keyframes logoPulse { 0% {box-shadow: 0 0 10px var(--primary);} 50% {box-shadow: 0 0 25px var(--primary);} 100% {box-shadow: 0 0 10px var(--primary);} }
 
         /* Fixed Live Time Badge CSS */
@@ -20,7 +20,7 @@
         .pulse-dot { width: 8px; height: 8px; background-color: var(--primary); border-radius: 50%; animation: blink 1s infinite; }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
 
-        /* New Attractive Titles CSS */
+        /* Attractive Titles CSS */
         .title-container { margin-bottom: 15px; }
         .app-title-main { font-size: 26px; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; background: linear-gradient(90deg, #00ff88, #00b3ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 0 20px rgba(0, 255, 136, 0.4); transition: 0.3s; }
         .app-subtitle { font-size: 13px; color: var(--gold); letter-spacing: 5px; text-transform: uppercase; display: block; margin-top: 5px; text-shadow: 0 0 15px rgba(255, 215, 0, 0.6); font-weight: 800; font-family: monospace; }
@@ -107,8 +107,8 @@
 
     <div class="container" id="mainContainer">
 
-        <!-- LOGO LINK -->
-        <img src="logo.png" onerror="this.src='https://cdn-icons-png.flaticon.com/512/160/160139.png'" alt="Logo" class="app-logo">
+        <!-- DYNAMIC LOGO -->
+        <img id="mainAppLogo" src="https://cdn-icons-png.flaticon.com/512/160/160139.png" onerror="this.src='https://cdn-icons-png.flaticon.com/512/160/160139.png'" alt="Logo" class="app-logo">
 
         <!-- TITLE SECTION -->
         <div class="title-container">
@@ -207,15 +207,22 @@
             document.getElementById('btnApp2').classList.remove('active');
             document.getElementById('btnApp' + appId).classList.add('active');
 
-            // Text Update
+            // Text and Logo Update
             if(appId === 1) {
                 document.getElementById('appTitle').textContent = "CARD SHOW HACK";
                 document.getElementById('appPrice').textContent = "PKR 3000";
                 document.getElementById('priceText').textContent = "3000 PKR";
+
+                // === APP 1 (CARD SHOW) LOGO ===
+                document.getElementById('mainAppLogo').src = "https://cdn-icons-png.flaticon.com/512/160/160139.png"; 
+
             } else {
                 document.getElementById('appTitle').textContent = "PREDICTION TOOL HACK";
                 document.getElementById('appPrice').textContent = "PKR 1500";
                 document.getElementById('priceText').textContent = "1500 PKR";
+
+                // === APP 2 (PREDICTION TOOL) LOGO ===
+                document.getElementById('mainAppLogo').src = "https://i.ibb.co/8n33r6Vb/logo.png"; 
             }
 
             // Check karo agar yeh app already unlocked hai aur time bacha hai
@@ -321,10 +328,10 @@
 
             setTimeout(() => { 
                 document.getElementById('loadingOverlay').style.display='none';
-                
+
                 // 24 Hour Timer Logic Save (24 * 60 * 60 * 1000)
                 localStorage.setItem('app_expiry_' + currentApp, new Date().getTime() + 86400000);
-                
+
                 // Reset loading UI
                 setTimeout(() => {
                     document.getElementById('mainSpinner').style.display='block'; 
